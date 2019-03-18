@@ -36,11 +36,27 @@
       - Use historical data to predict which players are interested in which items
       - Bundle auctions in batches minimizing the amount of items each player is interested in (so optimally a batch would only contain one item that each player would be interested in, these items could be different for each player)
       - Auctions the items in batches (all auctions inside a batch are auctioned concurrently and batches are done sequentially)
+#### Transparency and auditability
+This system lends itself quite well to full transparency and auditability. It should be possible to use commit-reveal schemes or time-locked secrets (see RSA's paper) to handle the auctions in such a way that any outside observer can verify the results.  
+If the system were to be fully anonymous, convergence may be an issue as it would be possible for an attacker to fork the network by submitting bids right on the deadline. But, as all the actors are known and this attack requires a malevolent actor deliberately attacking the system, trying to pull this attack would just lead to having the attacker identified and punished. Therefore, this attack is extremely low priority or directly non-existent in the threat model of this system.  
+If the system is anonymized in the future or people think that this issue is important enough to warrant the added complexity imposed by creating a solution for it, it could be solved by timestamping all messages using a centralized service or a blockchain.
 
 ### System to be optimized
 If we could model general happiness then we would be able to optimize the system for that. With that in mind we strive to create a cost function that models that with the intention of later using it to optimize the time-slot distribution using something like simulated annealing.
 #### Example
 A possible cost function could be something like `\sum_{professors}(hours that the professor should do - hours that the professor is doing in the current distribution)^2 + number of subjects a professor is teaching`, which, when minimized, would generate a distribution which is fair in the sense that each professor is working an amount of hours close to what it should be while the dispersion of subjects per professor is kept small.
 #### Problems
-- How do you pick the numerical constants used in the functions?
+- How do you pick the numerical constants used in the cost function?
   - A possible solution would be to use historical data to fit the constants to make the cost function as close to the conceptual cost function that has been used in previous allocations, that is, pick the constants which make the system generate allocations closest to the historical ones when fed historical data.
+  - Another solution is to have users take a survey and infer these constants from the data obtained.
+  - Yet another solution would be to have users develop their own cost functions, which would then be aggregated to construct the final cost function that would be optimized. That way each user could define what they believe is important when distributting time slots and the algorithm would take into account all the users opinions.
+    - **Security:** Allowing users to set arbirtrary functions poses a huge security risk as they may create a function that makes the system ignore all the other users' functions or one that biases the system in their favor. A way to normalize these functions would need to be developed that makes all user-provided functions the same relevance.
+    - **User Experience**: Having each user write their own cost function would lead to terrible UX as it would require a huge time sink, this could be alleviated by giving users several ways to define their functions with different degrees of freedom. A possible way of implementing these could be the following:
+      - Users that don't want to spend much time on it could just pick among a set of three predefined functions
+      - Users that want more freedom could pick the coeficients of the different terms of a predefined function (eg: pick `alpha` and `beta` in `alpha*low total number of hours + beta*time slots close to each other`)
+      - Users that want even more control could write their own totally custom functions
+- How will the function be?
+  - Ask users for factors they think should be taken into account. Tuning their rellevance is inside the scope of the previous problem
+  - The last solution proposed for the previous problem (have users define their own custom cost functions) would also solve this problem
+#### Transparency and auditability
+Making this system fully transparent and auditable would require using a fully deterministic optimization algorithm that has had its parameters (such as number of iterations) picked randomly. If these requirements are met, the result would be fully replicable and anyone should be able to verify the result by running the algorithms themself.
