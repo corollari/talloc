@@ -36,3 +36,11 @@
       - Use historical data to predict which players are interested in which items
       - Bundle auctions in batches minimizing the amount of items each player is interested in (so optimally a batch would only contain one item that each player would be interested in, these items could be different for each player)
       - Auctions the items in batches (all auctions inside a batch are auctioned concurrently and batches are done sequentially)
+
+### System to be optimized
+If we could model general happiness then we would be able to optimize the system for that. With that in mind we strive to create a cost function that models that with the intention of later using it to optimize the time-slot distribution using something like simulated annealing.
+#### Example
+A possible cost function could be something like `\sum_{professors}(hours that the professor should do - hours that the professor is doing in the current distribution)^2 + number of subjects a professor is teaching`, which, when minimized, would generate a distribution which is fair in the sense that each professor is working an amount of hours close to what it should be while the dispersion of subjects per professor is kept small.
+#### Problems
+- How do you pick the numerical constants used in the functions?
+  - A possible solution would be to use historical data to fit the constants to make the cost function as close to the conceptual cost function that has been used in previous allocations, that is, pick the constants which make the system generate allocations closest to the historical ones when fed historical data.
