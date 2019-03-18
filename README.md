@@ -41,7 +41,7 @@ This system lends itself quite well to full transparency and auditability. It sh
 If the system were to be fully anonymous, convergence may be an issue as it would be possible for an attacker to fork the network by submitting bids right on the deadline. But, as all the actors are known and this attack requires a malevolent actor deliberately attacking the system, trying to pull this attack would just lead to having the attacker identified and punished. Therefore, this attack is extremely low priority or directly non-existent in the threat model of this system.  
 If the system is anonymized in the future or people think that this issue is important enough to warrant the added complexity imposed by creating a solution for it, it could be solved by timestamping all messages using a centralized service or a blockchain.
 
-### System to be optimized
+### Optimization Algorithm
 If we could model general happiness then we would be able to optimize the system for that. With that in mind we strive to create a cost function that models that with the intention of later using it to optimize the time-slot distribution using something like simulated annealing.
 #### Example
 A possible cost function could be something like `\sum_{professors}(hours that the professor should do - hours that the professor is doing in the current distribution)^2 + number of subjects a professor is teaching`, which, when minimized, would generate a distribution which is fair in the sense that each professor is working an amount of hours close to what it should be while the dispersion of subjects per professor is kept small.
@@ -60,3 +60,8 @@ A possible cost function could be something like `\sum_{professors}(hours that t
   - The last solution proposed for the previous problem (have users define their own custom cost functions) would also solve this problem
 #### Transparency and auditability
 Making this system fully transparent and auditable would require using a fully deterministic optimization algorithm that has had its parameters (such as number of iterations) picked randomly. If these requirements are met, the result would be fully replicable and anyone should be able to verify the result by running the algorithms themself.
+
+### Hybrid approaches
+Other approaches to this problem can be created by mixing the two methods described so far, creating new systems like the following:
+- Use vickrey auctions to obtain an initial distribution and then distribute the time-slots/subjects that haven't had any bidders using the optimization algorithm
+- Use vickrey auctions to gauge player preferences (and also balance the system?) and then apply the optimization algorithm while taking into account these preferences (preference matching would be a part of the cost function)
