@@ -1,6 +1,9 @@
 # talloc
 > Time Alloc: Optimizing time-slots allocations in a timetable
 
+## Problem statement
+Create a system that allocates subjects to professors in the best way possible.
+
 ## Possible systems
 
 ### Vickrey auctions
@@ -63,6 +66,25 @@ A possible cost function could be something like `\sum_{professors}(hours that t
 - How will the function be?
   - Ask users for factors they think should be taken into account. Tuning their rellevance is inside the scope of the previous problem
   - The last solution proposed for the previous problem (have users define their own custom cost functions) would also solve this problem
+
+#### Optimize what?
+
+Parameters to optimize: Distribution of time-slots/subjects to professors (decide which professor will teach each lesson).
+
+Metrics to optimize for:
+- Numero de hores que hauria de fer = numero de hores que fa (considerar saldo històric)
+- Dispersió d'assignatures baixa
+- Preferencies d'assignatura
+- Hores/classes estiguin juntes temporalment
+- Si numero d'hores al dia > CONSTANT -> Penalitza
+- Preferencies horaries (ex: no vull fer classes a partir de les 5pm)
+
+Constraints:
+- Prohibida sobreposició de classes/hores
+- Diferencia en temps entre classes de diferents facultats > 20 minuts (fer-ho optimització en comptes de restricció?)
+- Assignatures de graus principals no es poden fer més de 3 anys seguits
+- Assignatures de graus no principals no es poden fer més de 4 anys seguits
+- Restriccions per departament en les assignatures de 3r i 4rt de mates
 
 #### Transparency and auditability
 Making this system fully transparent and auditable would require using a fully deterministic optimization algorithm that has had its parameters (such as number of iterations) picked randomly. If these requirements are met, the result would be fully replicable and anyone should be able to verify the result by running the algorithms themself.
