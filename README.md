@@ -76,7 +76,7 @@ Metrics to optimize for:
 - The amount of sujects assigned to each professor should be low (to prevent a professor having very small parts of a large number of subjects)
 - Subjects should be matched to professors following their preferences (which subjects a professors wants to teach) as close as possible
 - Lessons assigned to the same teacher should be temporally close (eg: one class after the other)
-- A professor shoudln't work too many hours in any given day (if the number of hours working in a single day is greater than some constant -> punish the algorithm)
+- A professor shouldn't work too many hours in any given day (if the number of hours working in a single day is greater than some constant -> punish the algorithm)
 - Matching should accommodate each professor's time preferences (eg: "I'd like to go home before 6pm")
 
 Constraints:
