@@ -1,4 +1,4 @@
-This system uses simulated annealing for to optimize the cost function
+This system uses simulated annealing to optimize the cost function
 
 ## Set up (can be skipped)
 ```
@@ -8,7 +8,7 @@ virtualenv venv --ptyhon=python3
 
 ## Install
 ```
-pip install simanneal
+pip install -r requirements.txt
 ```
 
 ## Run
