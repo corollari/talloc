@@ -67,24 +67,24 @@ A possible cost function could be something like `\sum_{professors}(hours that t
   - Ask users for factors they think should be taken into account. Tuning their rellevance is inside the scope of the previous problem
   - The last solution proposed for the previous problem (have users define their own custom cost functions) would also solve this problem
 
-#### Optimize what?
+#### Optimization model
 
 Parameters to optimize: Distribution of time-slots/subjects to professors (decide which professor will teach each lesson).
 
 Metrics to optimize for:
-- Numero de hores que hauria de fer = numero de hores que fa (considerar saldo històric)
-- Dispersió d'assignatures baixa
-- Preferencies d'assignatura
-- Hores/classes estiguin juntes temporalment
-- Si numero d'hores al dia > CONSTANT -> Penalitza
-- Preferencies horaries (ex: no vull fer classes a partir de les 5pm)
+- Number of hours a professor is working should be the closest to the number of hours he is supposed to work (as stated in the contract)
+- The amount of sujects assigned to each professor should be low (to prevent a professor having very small parts of a large number of subjects)
+- Subjects should be matched to professors following their preferences (which subjects a professors wants to teach) as close as possible
+- Lessons assigned to the same teacher should be temporally close (eg: one class after the other)
+- A professor shoudln't work too many hours in any given day (if the number of hours working in a single day is greater than some constant -> punish the algorithm)
+- Matching should accommodate each professor's time preferences (eg: "I'd like to go home before 6pm")
 
 Constraints:
-- Prohibida sobreposició de classes/hores
-- Diferencia en temps entre classes de diferents facultats > 20 minuts (fer-ho optimització en comptes de restricció?)
-- Assignatures de graus principals no es poden fer més de 3 anys seguits
-- Assignatures de graus no principals no es poden fer més de 4 anys seguits
-- Restriccions per departament en les assignatures de 3r i 4rt de mates
+- There must be no temporal overlap between lessons assigned to the same professor
+- The time difference between the end and start of two lessons held in different faculties must be greater than 20 minutes
+- Subjects from the degrees of Mathematics, Applied Statistics and Computational Maths must not be taught by the same professor for more than 3 consecutive years
+- Subjects from other degrees must not be taught by the same professor for more than 4 consecutive years
+- Subjects from the 3rd or 4th years of the Math degree must only be taught by professors of specific departments
 
 #### Transparency and auditability
 Making this system fully transparent and auditable would require using a fully deterministic optimization algorithm that has had its parameters (such as number of iterations) picked randomly. If these requirements are met, the result would be fully replicable and anyone should be able to verify the result by running the algorithms themself.
