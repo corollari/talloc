@@ -2,7 +2,7 @@ This system uses simulated annealing to optimize the cost function
 
 ## Set up (can be skipped)
 ```
-virtualenv venv --ptyhon=python3
+virtualenv venv --python=python3
 . venv/bin/activate
 ```
 
