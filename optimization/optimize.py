@@ -10,8 +10,18 @@ def rand(vec):
 # TODO: Add time preferences in professor data and take them into account in the cost function
 professors=[
     {
-    'department': 1, # department id
-    'preferences': [2, 1, 0], # courseIds order by preference
+    'department': 2, # department id
+    'preferences': {2:0.8, 0:0.2}, # courseIds order by preference
+    'worklength': 20*60 # Minutes each professor should work
+    },
+    {
+    'department': 2, # department id
+    'preferences': {1:0.6, 0:0.4}, # courseIds order by preference
+    'worklength': 20*60 # Minutes each professor should work
+    },
+    {
+    'department': 2, # department id
+    'preferences': {3:0.1, 2:0.9}, # courseIds order by preference
     'worklength': 20*60 # Minutes each professor should work
     }
 ]
@@ -23,14 +33,72 @@ courses=[
     'onlySpecificDepartment': None, # None if it's not required or the department id if it's required
     'sessions': [ # Data on all the sessions that are part of a course
         { # Note: session length is implicit as start and end times are given
-            'day': 1, # 0 - monday, 4 - friday
-            'start': 230, # in minutes since the beginning of the day (12 am)
-            'end': 250 # in minutes since the beginning of the day (12 am)
+            'day': 0, # 0 - monday, 4 - friday
+            'start': 9*60, # in minutes since the beginning of the day (12 am)
+            'end': 10*60 # in minutes since the beginning of the day (12 am)
         },
         {
             'day': 4,
-            'start': 230,
-            'end': 250
+            'start': 13*60,
+            'end': 14*00
+        }]
+    },
+    {
+    'faculty': 1, #faculty id
+    'coreDegree': False,
+    'onlySpecificDepartment': None, # None if it's not required or the department id if it's required
+    'sessions': [ # Data on all the sessions that are part of a course
+        { # Note: session length is implicit as start and end times are given
+            'day': 0, # 0 - monday, 4 - friday
+            'start': 12*60, # in minutes since the beginning of the day (12 am)
+            'end': 14*60 # in minutes since the beginning of the day (12 am)
+        },
+        {
+            'day': 1,
+            'start': 9*60,
+            'end': 11*60
+        },
+        {
+            'day': 2,
+            'start': 10*60,
+            'end': 12*60
+        }]
+    },
+    {
+    'faculty': 2, #faculty id
+    'coreDegree': False,
+    'onlySpecificDepartment': None, # None if it's not required or the department id if it's required
+    'sessions': [ # Data on all the sessions that are part of a course
+        { # Note: session length is implicit as start and end times are given
+            'day': 1, # 0 - monday, 4 - friday
+            'start':12*60, # in minutes since the beginning of the day (12 am)
+            'end': 13*60 # in minutes since the beginning of the day (12 am)
+        },
+        {
+            'day': 2,
+            'start': 9*60,
+            'end': 11*60
+        }]
+    },
+    {
+    'faculty': 3, #faculty id
+    'coreDegree': False,
+    'onlySpecificDepartment': None, # None if it's not required or the department id if it's required
+    'sessions': [ # Data on all the sessions that are part of a course
+        { # Note: session length is implicit as start and end times are given
+            'day': 1, # 0 - monday, 4 - friday
+            'start': 10*60, # in minutes since the beginning of the day (12 am)
+            'end': 13*60 # in minutes since the beginning of the day (12 am)
+        },
+        {
+            'day': 3,
+            'start': 12*60,
+            'end': 14*60
+        },
+        {
+            'day': 4,
+            'start': 9*60,
+            'end': 11*60
         }]
     }
 ]
