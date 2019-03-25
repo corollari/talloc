@@ -12,17 +12,17 @@ professors=[
     {
     'department': 2, # department id
     'preferences': {2:0.8, 0:0.2}, # courseIds order by preference
-    'worklength': 20*60 # Minutes each professor should work
+    'worklength': 5*60 # Minutes each professor should work
     },
     {
     'department': 2, # department id
     'preferences': {1:0.6, 0:0.4}, # courseIds order by preference
-    'worklength': 20*60 # Minutes each professor should work
+    'worklength': 5*60 # Minutes each professor should work
     },
     {
     'department': 2, # department id
     'preferences': {3:0.1, 2:0.9}, # courseIds order by preference
-    'worklength': 20*60 # Minutes each professor should work
+    'worklength': 5*60 # Minutes each professor should work
     }
 ]
 
@@ -104,12 +104,12 @@ courses=[
 ]
 
 def sessionOverlap(s1, s2): #TODO
-    return sess1['day']==sess2['day']
+    return s1['day']==s2['day'] and s1['start'] <= s2['end'] and s2['start'] <= s1['end']
 
 def facultyDifference(s1, s2): #TODO
-    return sess1['day']==sess2['day']
+    return s1['day']==s2['day']
 
-CONSTRAINED=float("inf")
+CONSTRAINED=2**63 - 1
 MAX_MINUTES_PER_DAY=500
 
 class Optimizer(Annealer):
@@ -134,8 +134,8 @@ class Optimizer(Annealer):
                         for sess2 in cour2['sessions']:
                             if sessionOverlap(sess1, sess2):
                                 return CONSTRAINED
-                            if facultyDifference(sess1, sess2):
-                                return CONSTRAINED
+                            #if facultyDifference(sess1, sess2):
+                            #    return CONSTRAINED
                 if cour1['onlySpecificDepartment']!=None and cour1['onlySpecificDepartment']!=prof['department']:
                     return CONSTRAINED
                 profSessions+=cour1['sessions']
@@ -153,4 +153,10 @@ class Optimizer(Annealer):
         return e
 
 initial_state = [rand(professors) for x in range(len(courses))]
-assignations, cost = Optimizer(initial_state).anneal()
+opt= Optimizer(initial_state)
+auto_schedule = opt.auto(minutes=1)
+
+opt.set_schedule(auto_schedule)
+
+assignations, cost = opt.anneal()
+print(assignations, cost)
